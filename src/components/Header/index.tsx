@@ -24,18 +24,22 @@ pathName: "/about",
     <div className="py-2 fixed z-50 bg-white border-b w-full transition-all duration-300">
    <div className="container m-auto flex items-center">
       <Link href="/">
-    <picture>
-   <Logo className="h-10"/>
-   </picture>
+    
+            <img
+              src="/assets/icons/logo.svg"
+              alt="Logo"
+              className="h-10 w-auto cursor-pointer"
+            />
+          
    </Link>
    <div className="flex-1 flex gap-10 items-center justify-center">
    {items.map((item, index) => (
    <Link
-    key={index}
-   href={item.pathName}
-   className={cs("text-black", {
-   "underline font-semibold": router.pathname === item.pathName,
-   })}
+        key={index}
+        href={item.pathName}
+        className={cs("text-black", {
+             "underline font-semibold": router.pathname === item.pathName,
+    })}
    >
    {item. name}
       </Link>
