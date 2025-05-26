@@ -1,3 +1,4 @@
+import React from "react";
 import {motion} from "framer-motion"
 
 interface Props{
@@ -6,8 +7,7 @@ interface Props{
     description: string;
 }
 
-const Card = (props: Props) => {
-    const {icon: Icon, title, description} = props;
+const Card: React.FC<Props> = ({ icon: Icon, title, description }) => {
     return(
         <motion.div
         className = "bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-sl transition-shadow duration-300"

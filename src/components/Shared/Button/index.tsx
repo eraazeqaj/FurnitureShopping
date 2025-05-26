@@ -1,35 +1,41 @@
+import { motion } from "framer-motion";
 import cs from "classnames";
-import {motion} from "framer-motion"
+import React from "react";
 
 interface Props {
-    text: string;
-    onClick: () => void;
-    variant?: "primary" | "secondary" | "tertiary" | "quaternary";
-    type: "button" | "submit" | "reset";
+  text: string;
+  onClick: () => void;
+  variant?: "primary" | "secondary" | "tertiary" | "quaternary";
+  type?: "button" | "submit" | "reset";
 }
-    const Button = (props:Props) => {
-    const { text, onClick, variant="primary", type = "button" } = props;
 
-    const buttonStyles = {
-        primary : "bg-yellow-600 hover:bg-yellow-700 text-white",
-        secondary : "bg-gray-800 hover: bg-gray-900 text-white",
-        tertiary: "bg-gray-200 huver:bg-gray-300 text-gray-800",
-        quaternary: "bg-gray-300 hover: bg-gray-400 text-gray-800",
-    };
 
-return (
-<motion.button
-    type={type}
-    className = {cs(
-        "px-6 py-3 rounded-full font-medium transition-all",
+const Button = ({text, onClick, variant = "primary", type = "button"} : Props) => {
+
+  const buttonStyles ={
+
+    primary: "bg-amber-900 hover:bg-amber-700 text-white",
+    secondary: "bg-amber-800 hover:bg-amber-700 text-white",
+    tertiary: "bg-amber-600 hover:bg-amber-500 text-white-800", 
+    quaternary: "bg-amber-300 hover:bg-amber-400 text-white-800",
+
+  };
+        
+  return (
+
+    <motion.button
+      type={type}
+      className={cs(
+        "px-6 py-3 rounded-full font-medium transition-all duration-200",
         buttonStyles[variant]
-    )}
-    onClick = {onClick}
-    whileHover = {{scale: 1.05}}
-    whileTap = {{scale : 0.95}}
->
-    {text}
-</motion.button>
-);
+      )}
+      onClick={onClick}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      {text}
+    </motion.button>
+  );
 };
+
 export default Button;
