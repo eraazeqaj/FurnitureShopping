@@ -3,10 +3,10 @@ import MainLayout from "@/components/MainLayout";
 
 export default function RegisterPage(){
     return (
-        <MainLayout name="Register">
+        
             <div className="pt-10">
                 <RegisterForm />
             </div>
-        </MainLayout>
+        
     );
 }
