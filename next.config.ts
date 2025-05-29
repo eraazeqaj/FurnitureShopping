@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
   },
 
   env:{
-    MONGODB_URL: "mongorestore --uri mongodb+srv://dev-api:<rzP0pQcw7RiPS53m>@dreamliving.oo6ql2q.mongodb.net ", 
+    MONGODB_URL: "mongodb+srv://dev-api:rzP0pQcw7RiPS53m@dreamliving.oo6ql2q.mongodb.net/ ", 
   },
 }
 

@@ -3,6 +3,9 @@ declare global {
     var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
+console.log("Mongo URL:", process.env.MONGODB_URL);
+
+
 const url = process.env.MONGODB_URL as string;
 const client = new MongoClient(url);
 
@@ -14,4 +17,5 @@ if(!global._mongoClientPromise){
 
 clientPromise = global._mongoClientPromise;
 export default clientPromise;
+
 
