@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
     })
     return config
   },
+
+  env:{
+    MONGODB_URL: "mongorestore --uri mongodb+srv://dev-api:<rzP0pQcw7RiPS53m>@dreamliving.oo6ql2q.mongodb.net ", 
+  },
 }
 
 export default nextConfig
