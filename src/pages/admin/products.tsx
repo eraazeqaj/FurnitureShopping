@@ -1,19 +1,19 @@
 import {useEffect, useState} from "react";
-import {getProducts} from "@/services/database";
+import { getProducts } from "../../api/services/products";
 import {Product} from "../../api/models/products";
 import Link from "next/link";
 
 export default function AdminProductsPage() {
     const [products, setProducts] = useState<Product[]>([]);
 
-    useEffect(() =>{
-        async function fetchData(){
-            const res = await getProducts();
-            setProducts(res);
-        }
-        fetchData();
-    }, []
-    );
+     useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("/api/admin/products");
+      const data = await res.json();
+      setProducts(data);
+    }
+    fetchData();
+  }, []);
 
     return(
         <div className = "p-6">
