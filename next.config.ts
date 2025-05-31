@@ -10,9 +10,10 @@ const nextConfig: NextConfig = {
     return config
   },
 
-  env:{
-    MONGODB_URL: "mongodb+srv://dev-api:rzP0pQcw7RiPS53m@dreamliving.oo6ql2q.mongodb.net/ ", 
-  },
+  env: {
+  MONGODB_URL: process.env.MONGODB_URL,
+},
+
 }
 
 export default nextConfig
