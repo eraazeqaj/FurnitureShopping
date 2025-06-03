@@ -33,10 +33,13 @@ export default function AdminProductsPage() {
                         <p className="text-amber-800 font-bold">${product.price}</p>
 
                         <div className="mt-4 flex justify-between">
-                            <Link
-                                href = {`/admin/products/edit/${product._id}`}
-                                className="text-blue-600 hover: underline"
-                            > Ndrysho Produktin </Link>
+                        <Link
+    href={`/admin/products/${product._id}/edit`}
+    className="text-blue-600 hover:underline"
+> Ndrysho Produktin
+</Link>
+
+
 
                             <button
                                 onClick={() => handleDelete(product._id?.toString())}
