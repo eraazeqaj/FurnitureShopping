@@ -14,7 +14,7 @@ export interface Product{
   name: string;
   email: string;
   password: string;
-  isAdmin: boolean;
+  isAdmin: false;
  }
   export interface Category{
     _id?: string;

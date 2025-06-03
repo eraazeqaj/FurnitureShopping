@@ -36,10 +36,12 @@ export async function createUser(data: User){
   return db.collection<User>("users").insertOne({...data});
 }
 
-export async function getUsers(): Promise<User[]> {
+export async function getUserByEmail(email: string): Promise<User | null> {
   const db = await getDb();
-  return db.collection<User>("users").find().toArray();
+  return db.collection<User>("users").findOne({ email });
 }
+
+
 
 export async function createCategory(data: Category) {
   const db = await getDb();
