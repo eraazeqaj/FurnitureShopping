@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Product } from "@/api/models/products";
+import Button from "@/components/Shared/Button";
 
 export default function EditProductPage() {
   const { id } = useRouter().query;
@@ -38,54 +39,77 @@ export default function EditProductPage() {
     });
 
     if (res.ok) {
-      alert("Product updated successfully!");
+      alert("Produkti u përditësua me sukses!");
       router.push("/admin");
     } else {
-      alert("Failed to update product.");
+      alert("Dështoi përditësimi i produktit.");
     }
   }
 
   return (
-    <div>
-      <h1>Edit Product</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
+    <div className="min-h-screen bg-amber-50 flex items-center justify-center px-4 py-10">
+      <div className="max-w-2xl w-full p-8 bg-white shadow-xl rounded-lg border border-amber-200">
+        <h1 className="text-3xl font-bold text-center text-amber-900 mb-8">Përditëso Produktin</h1>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block mb-1 font-medium text-amber-800">Emri i Produktit</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="w-full px-4 py-2 bg-amber-100 border border-amber-500 text-amber-900 rounded focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-amber-700"
+              placeholder="Shembull: Komodinë"
+            />
+          </div>
 
-        <div>
-          <label>Description</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </div>
+          <div>
+            <label className="block mb-1 font-medium text-amber-800">Përshkrimi</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+              className="w-full px-4 py-2 bg-amber-100 border border-amber-500 text-amber-900 rounded resize-none focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-amber-700"
+              rows={4}
+              placeholder="Shkruani përshkrimin e produktit..."
+            />
+          </div>
 
-        <div>
-          <label>Price</label>
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(parseFloat(e.target.value))}
-          />
-        </div>
+          <div>
+            <label className="block mb-1 font-medium text-amber-800">Çmimi (€)</label>
+            <input
+              type="number"
+              step="0.01"
+              value={price}
+              onChange={(e) => setPrice(parseFloat(e.target.value))}
+              required
+              className="w-full px-4 py-2 bg-amber-100 border border-amber-500 text-amber-900 rounded focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-amber-700"
+              placeholder="99.99"
+            />
+          </div>
 
-        <div>
-          <label>Photo URL</label>
-          <input
-            type="text"
-            value={pictureUrl}
-            onChange={(e) => setPictureUrl(e.target.value)}
-          />
-        </div>
+          <div>
+            <label className="block mb-1 font-medium text-amber-800">URL e Fotos</label>
+            <input
+              type="text"
+              value={pictureUrl}
+              onChange={(e) => setPictureUrl(e.target.value)}
+              className="w-full px-4 py-2 bg-amber-100 border border-amber-500 text-amber-900 rounded focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-amber-700"
+              placeholder="https://..."
+            />
+          </div>
 
-        <button type="submit">Save Changes</button>
-      </form>
+          <div className="text-right">
+            <Button
+              text = "Ruaj ndryshimet"
+              type="submit"
+              onClick={() => {}}
+              variant = "primary"
+            />
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
+

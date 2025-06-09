@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Button from "@/components/Shared/Button"
 
 export default function AddProductPage() {
   const router = useRouter();
@@ -35,36 +36,37 @@ export default function AddProductPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
-      <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Shto Produkt të Ri</h1>
-      <form onSubmit={handleSubmit} className="space-y-5">
+    <div className="min-h-screen bg-amber-50 flex items-center justify-center px-4 py-10">
+      <div className="max-w-2xl w-full p-8 bg-white shadow-xl rounded-lg border border-amber-200">
+      <h1 className="text-3xl font-bold text-center text-amber-900 mb-8">Shto Produkt të Ri</h1>
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block mb-1 font-medium text-gray-700">Emri i produktit</label>
+          <label className="block mb-1 font-medium text-amber-800">Emri i produktit</label>
           <input
             name="name"
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-400"
+            className="w-full px-4 py-2 border border-amber-300 text-amber-900 rounded focus:outline-none focus:ring-2 focus:border-amber-400"
             placeholder="Shembull: Tavolinë druri"
           />
         </div>
 
         <div>
-          <label className="block mb-1 font-medium text-gray-700">Përshkrimi</label>
+          <label className="block mb-1 font-medium text-amber-800">Përshkrimi</label>
           <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded resize-none focus:outline-none focus:ring focus:border-blue-400"
+            className="w-full px-4 py-2 border border-amber-300 text-amber-900 rounded resize-none focus:outline-none focus:ring-2 focus:border-amber-400"
             rows={4}
             placeholder="Shkruaj përshkrimin e produktit..."
           />
         </div>
 
         <div>
-          <label className="block mb-1 font-medium text-gray-700">Çmimi (€)</label>
+          <label className="block mb-1 font-medium text-amber-800">Çmimi (€)</label>
           <input
             name="price"
             type="number"
@@ -72,42 +74,43 @@ export default function AddProductPage() {
             value={formData.price}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-400"
+            className="w-full px-4 py-2 border border-amber-300 text-amber-900 rounded focus:outline-none focus:ring-2 focus:border-amber-400"
             placeholder="99.99"
           />
         </div>
 
         <div>
-          <label className="block mb-1 font-medium text-gray-700">URL e Fotos</label>
+          <label className="block mb-1 font-medium text-amber-800">URL e Fotos</label>
           <input
             name="pictureUrl"
             value={formData.pictureUrl}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-400"
+            className="w-full px-4 py-2 border border-amber-300 text-amber-900 rounded focus:outline-none focus:ring-2 focus:border-amber-400"
             placeholder="https://..."
           />
         </div>
 
         <div>
-          <label className="block mb-1 font-medium text-gray-700">ID e Kategorisë (opsionale)</label>
+          <label className="block mb-1 font-medium text-amber-800">ID e Kategorisë (opsionale)</label>
           <input
             name="categoryId"
             value={formData.categoryId}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:border-blue-400"
+            className="w-full px-4 py-2 border border-amber-300 text-amber-900 rounded focus:outline-none focus:ring-2 focus:border-amber-400"
             placeholder="ObjectId e kategorisë"
           />
         </div>
 
         <div className="text-right">
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors"
-          >
-            Shto Produktin
-          </button>
+          <Button
+            text = "Shto produktin"
+            type = "submit"
+            onClick={() => {}}
+            variant = "primary"
+          />  
         </div>
       </form>
+    </div>
     </div>
   );
 }
