@@ -34,10 +34,10 @@ export default function AdminProductsPage() {
 
                         <div className="mt-4 flex justify-between">
                         <Link
-    href={`/admin/products/${product._id}/edit`}
-    className="text-blue-600 hover:underline"
-> Ndrysho Produktin
-</Link>
+                            href={`/admin/products/${product._id}/edit`}
+                            className="text-blue-600 hover:underline"
+                        > Ndrysho Produktin
+                        </Link>
 
 
 

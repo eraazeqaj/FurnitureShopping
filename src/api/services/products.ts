@@ -28,7 +28,7 @@ export async function getProducts(): Promise<Product[]>{
 
 export async function getProductById(id: string): Promise<Product | null>{
   const db = await getDb();
-  return db.collection<Product>("products").findOne({_id: new Object(id)});
+  return db.collection<Product>("products").findOne({_id: new ObjectId(id)});
 }
 
 export async function createUser(data: User){

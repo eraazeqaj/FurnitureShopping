@@ -28,7 +28,7 @@ export default function AddProductPage() {
     });
 
     if (res.ok) {
-      router.push("/admin/products");
+      router.push("/admin");
     } else {
       alert("Failed to create product");
     }
