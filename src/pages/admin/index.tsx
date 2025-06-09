@@ -20,10 +20,12 @@ export default function AdminProductsPage() {
         <div className = "min-h-screen bg-amber-50 p-6">
             <h1 className="text-3xl font-bold mb-6 text-amber-900">Menaxho Produktet</h1>
             
-            <Link
-                href="/admin/products/new"
-                className="bg-amber-700 text-white px-4 py-2 rounded hover:bg-amber-800 transition mb-6 inline-block"
-                > Shto produkt të ri
+            <Link href="/admin/products/new">
+                <Button
+                    text = "Shto produkt të ri"
+                    onClick={()=>{}}
+                    variant="primary"
+                /> 
             </Link>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
