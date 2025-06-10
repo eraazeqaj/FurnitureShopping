@@ -1,6 +1,6 @@
 import React from "react";
 import MainLayout from "@/components/MainLayout";
-import LoginForm from "@/components/Forms/LoginForm";
+import LoginForm from "pages/Forms/LoginForm";
 
 export default function LoginPage() {
   return (

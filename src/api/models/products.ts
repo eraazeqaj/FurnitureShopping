@@ -10,11 +10,12 @@ export interface Product{
  }
 
  export interface User{
-  _id?: string;
+  _id?: string | ObjectId;
   name: string;
   email: string;
   password: string;
-  isAdmin: false;
+  isAdmin: boolean;
+  emailVerified?: Date | null;
  }
   export interface Category{
     _id?: string;
