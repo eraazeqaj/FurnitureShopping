@@ -46,6 +46,24 @@ export default function EditProductPage() {
     }
   }
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", "product_photos"); // ✅ Use your preset name
+
+  const res = await fetch("https://api.cloudinary.com/v1_1/dr1v46ym9/image/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = await res.json();
+  setPictureUrl(data.secure_url); 
+};
+
+
   return (
     <div className="min-h-screen bg-amber-50 flex items-center justify-center px-4 py-10">
       <div className="max-w-2xl w-full p-8 bg-white shadow-xl rounded-lg border border-amber-200">
@@ -91,12 +109,15 @@ export default function EditProductPage() {
           <div>
             <label className="block mb-1 font-medium text-amber-800">URL e Fotos</label>
             <input
-              type="text"
-              value={pictureUrl}
-              onChange={(e) => setPictureUrl(e.target.value)}
-              className="w-full px-4 py-2 bg-amber-100 border border-amber-500 text-amber-900 rounded focus:outline-none focus:ring-2 focus:ring-amber-600 placeholder:text-amber-700"
-              placeholder="https://..."
-            />
+  type="file"
+  accept="image/*"
+  onChange={handleImageUpload}
+/>
+
+{pictureUrl && (
+  <img src={pictureUrl} alt="Preview" className="mt-2 w-40 h-40 object-cover rounded" />
+)}
+
           </div>
 
           <div className="text-right">

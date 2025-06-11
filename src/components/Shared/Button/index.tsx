@@ -4,9 +4,10 @@ import React from "react";
 
 interface Props {
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
   variant?: "primary" | "secondary" | "tertiary" | "quaternary";
   type?: "button" | "submit" | "reset";
+  disabled? : boolean;
 }
 
 

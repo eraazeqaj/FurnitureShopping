@@ -16,7 +16,7 @@ export function MainLayout({ children, name }: Props) {
       </Head>
       <div className="flex flex-col min-h-screen">
         <Header
-          logoSrc="/assets/icons/logo.svg"
+          logoSrc="/logo.svg"
           navItems={[
             { name: "Home", pathName: "/" },
             { name: "About", pathName: "/about" },

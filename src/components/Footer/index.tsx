@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import Link from "next/link";
-import Logo from "@/assets/icons/logo.svg";
 
 interface FooterProps {
   copyrightText?: string;
@@ -20,18 +19,19 @@ export function Footer({
       className={`bg-yellow-700 border-t border-amber-400 shadow-inner ${className}`}
     >
       <div className="container mx-auto py-6 flex items-center">
-        <Link href={logoLink} passHref>
-          
+        <Link href={logoLink} passHref legacyBehavior>
+          <a className="h-10 w-auto cursor-pointer flex items-center">
             <img
-              src={Logo.src}
+              src="/logo.svg"
               alt="Logo"
-              className="h-10 w-auto cursor-pointer"
+              className="h-full w-auto"
+              loading="lazy"
             />
-          
+          </a>
         </Link>
 
         <div className="flex-1 flex justify-center">
-          <p className="text-white-900 text-sm">{copyrightText}</p>
+          <p className="text-white text-sm">{copyrightText}</p>
         </div>
 
         {children}
@@ -41,3 +41,4 @@ export function Footer({
 }
 
 export default Footer;
+

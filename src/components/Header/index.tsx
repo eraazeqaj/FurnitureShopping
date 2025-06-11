@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import classNames from "classnames";
 
 export interface HeaderProps {
-  logoSrc: string;
+  logoSrc: string; // should be "/logo.svg"
   logoLink?: string;
   navItems: { name: string; pathName: string }[];
   className?: string;
@@ -25,13 +25,12 @@ export function Header({
       )}
       style={{ height: 64 }}
     >
-      <div className="container m-auto flex items-center justify-between h-full">
-        <Link href={logoLink} passHref>
-          <img
-            src={logoSrc}
-            alt="Logo"
-            className="h-10 w-auto cursor-pointer"
-          />
+      <div className="container mx-auto flex items-center justify-between h-full px-4">
+        <Link href={logoLink}>
+          {/* Note: Link doesn't render a DOM element, so we MUST wrap with a real element */}
+          <div className="h-10 w-auto cursor-pointer flex items-center">
+            <img src={logoSrc} alt="Logo" className="h-full w-auto" />
+          </div>
         </Link>
 
         <nav className="flex gap-8 items-center">
@@ -40,7 +39,7 @@ export function Header({
               key={index}
               href={item.pathName}
               className={classNames(
-                "text-white-600 hover:text-amber-700 transition-colors duration-300",
+                "text-white hover:text-amber-300 transition-colors duration-300",
                 {
                   "underline font-semibold": router.pathname === item.pathName,
                 }
@@ -56,3 +55,4 @@ export function Header({
 }
 
 export default Header;
+
