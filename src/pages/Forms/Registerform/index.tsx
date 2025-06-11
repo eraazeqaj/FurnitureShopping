@@ -132,7 +132,7 @@ export default function RegisterForm() {
 
         <p className="text-center text-sm text-amber-800">
           Ke një llogari?{" "}
-          <a href="/sign-in" className="text-amber-700 underline font-medium">
+          <a href="/login" className="text-amber-700 underline font-medium">
             Kyçu këtu
           </a>
         </p>
