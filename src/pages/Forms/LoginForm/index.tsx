@@ -20,8 +20,16 @@ export default function LoginForm() {
     if (res?.error) {
       setError(res.error);
     } else {
-      // Redirect on successful login
-      router.push("/");
+      const sessionRes = await fetch("/api/auth/session");
+      const session = await sessionRes.json();
+
+      if(session?.user?.isAdmin){
+        router.push("/admin");
+      }
+      else{
+        router.push("/profile");
+      }
+      
     }
   };
 

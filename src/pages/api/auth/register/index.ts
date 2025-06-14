@@ -8,7 +8,7 @@ export default async function handler(
     res: NextApiResponse
 ){
     if(req.method  === "POST"){
-        const {name, email, password} =req.body as User;
+        const {name, email, password, isAdmin} =req.body as User & {isAdmin? : boolean};
         if(!name || !email || !password){
             return res
             .status(400)
@@ -26,7 +26,7 @@ export default async function handler(
                 name,
                 email,
                 password: hashedPassword,
-                isAdmin: false,
+                isAdmin: isAdmin || false,
                 createdAt: new Date(),
                };
 

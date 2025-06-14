@@ -11,6 +11,7 @@ export default function RegisterForm() {
     email: "",
     password: "",
     confirmPassword: "",
+    isAdmin: false,
   });
 
   const [error, setError] = useState("");
@@ -31,6 +32,7 @@ export default function RegisterForm() {
           name: user.name,
           email: user.email,
           password: user.password,
+          isAdmin:user.isAdmin,
         }),
       });
 
@@ -122,6 +124,22 @@ export default function RegisterForm() {
             className="p-3 rounded-lg border border-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white"
           />
         </div>
+
+        <div className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              id="isAdmin"
+              checked={user.isAdmin}
+              onChange={(e) =>
+              setUser({ ...user, isAdmin: e.target.checked })
+              }
+              className="w-4 h-4 text-amber-600 bg-gray-100 border-gray-300 rounded focus:ring-amber-500"
+            />
+            <label htmlFor="isAdmin" className="text-amber-900 font-medium">
+            Regjistrohu si admin
+           </label>
+        </div>
+
 
         <button
           type="submit"
