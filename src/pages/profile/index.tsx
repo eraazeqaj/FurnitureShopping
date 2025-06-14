@@ -26,6 +26,15 @@ export default function ProfilePage(){
         {session?.user?.isAdmin && (
           <p className="mt-4 text-green-700 font-semibold">Admin i sistemit ✅</p>
         )}
+
+         <button
+        onClick={() => router.push("/catalogue")}
+        className="mt-6 bg-amber-900 text-white px-6 py-3 rounded hover:bg-amber-700 transition"
+      >
+        Shko te Katalogu
+      </button>
       </div>
+
+      
     )
 }

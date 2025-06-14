@@ -6,7 +6,7 @@ import { compare } from "bcryptjs";
 import NextAuth from "next-auth";
 import { NextAuthOptions } from "next-auth";
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   adapter: MongoDBAdapter(clientPromise as any),
   providers: [
     CredentialsProvider({
@@ -15,18 +15,17 @@ const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
-        const user = await getUserByEmail(credentials?.email!);
-        if (!user) throw new Error("Email nuk ekziston");
-
-        const isValid = await compare(credentials!.password, user.password);
-        if (!isValid) throw new Error("Fjalëkalimi nuk është i saktë");
-
-        return {
-          id: user._id!.toString(),
-          email: user.email,
-          isAdmin: user.isAdmin, 
-        };
+       async authorize(credentials, req) {
+        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/users/check`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(credentials),
+        });
+        const user = await res.json();
+        if(res.ok && user){
+          return user;
+        }
+        return null;
       },
     }),
   ],
