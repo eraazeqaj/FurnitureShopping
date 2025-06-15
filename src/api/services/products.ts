@@ -37,9 +37,14 @@ export async function createUser(data: User){
 }
 
 export async function getUserByEmail(email: string): Promise<User | null> {
+  console.log("getUserByEmail called with:", email);
   const db = await getDb();
-  return db.collection<User>("users").findOne({ email });
+  const user = await db.collection<User>("users").findOne({ email: { $regex: `^${email}$`, $options: "i" } });
+  console.log("Found user:", user ? user.email : null);
+  return user;
 }
+
+
 
 
 

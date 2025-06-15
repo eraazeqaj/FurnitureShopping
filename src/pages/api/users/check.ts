@@ -1,4 +1,3 @@
-// pages/api/users/check.ts
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getUserByEmail } from "@/api/services/products";
 import { compare } from "bcryptjs";
@@ -10,6 +9,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const { email, password } = req.body;
 
+  console.log("Checking user login for email:", email);
+
   if (!email || !password) {
     return res.status(400).json({ message: "Missing email or password" });
   }
@@ -18,11 +19,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const user = await getUserByEmail(email);
 
     if (!user) {
+      console.log("User not found:", email);
       return res.status(401).json({ message: "User not found" });
     }
 
     const isPasswordValid = await compare(password, user.password);
     if (!isPasswordValid) {
+      console.log("Invalid password for user:", email);
       return res.status(401).json({ message: "Invalid password" });
     }
 
@@ -36,3 +39,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(500).json({ message: "Internal server error" });
   }
 }
+
