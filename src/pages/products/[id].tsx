@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Product } from "@/api/models/products";
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import ReviewForm from "@/components/Product/ReviewForm";
+import ReviewList from "@/components/Product/ReviewList";
 
 export default function ProductDetailsPage() {
   const router = useRouter();
@@ -47,27 +49,36 @@ export default function ProductDetailsPage() {
   };
 
   if (loading) return <div className="p-8">Loading...</div>;
-  if (!product) return <div className="p-8">Product not found</div>;
+  if (!product) return <div className="p-8">Produkti nuk u gjet</div>;
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 gap-8">
-      <img
-        src={product.pictureUrl}
-        alt={product.name}
-        className="w-full h-auto object-cover rounded-lg shadow-md"
-      />
+    <div className="max-w-4xl mx-auto px-6 py-10 space-y-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <img
+          src={product.pictureUrl}
+          alt={product.name}
+          className="w-full h-auto object-cover rounded-lg shadow-md"
+        />
 
+        <div>
+          <h1 className="text-3xl font-bold text-amber-900 mb-4">{product.name}</h1>
+          <p className="text-gray-700 mb-4">{product.description}</p>
+          <p className="text-2xl font-semibold text-amber-700 mb-6">€{product.price}</p>
+
+          <button
+            className="bg-amber-900 text-white px-6 py-3 rounded hover:bg-amber-700 transition"
+            onClick={handleAddToCart}
+          >
+            Shto në shportë
+          </button>
+        </div>
+      </div>
+
+      {/* Reviews section */}
       <div>
-        <h1 className="text-3xl font-bold text-amber-900 mb-4">{product.name}</h1>
-        <p className="text-gray-700 mb-4">{product.description}</p>
-        <p className="text-2xl font-semibold text-amber-700 mb-6">€{product.price}</p>
-
-        <button
-          className="bg-amber-900 text-white px-6 py-3 rounded hover:bg-amber-700 transition"
-          onClick={handleAddToCart}
-        >
-          Shto në shportë
-        </button>
+        <h2 className="text-2xl font-semibold text-amber-800 mb-4">Shqyrtime</h2>
+        <ReviewList productId={id as string} />
+        {session?.user && <ReviewForm productId={id as string} />}
       </div>
     </div>
   );

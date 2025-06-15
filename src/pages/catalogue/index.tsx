@@ -8,13 +8,26 @@ export default function CataloguePage() {
   const { data: session } = useSession();
 
   useEffect(() => {
-    async function fetchProducts() {
+  async function fetchProducts() {
+    try {
       const res = await fetch("/api/products");
       const data = await res.json();
-      setProducts(data);
+
+      if (Array.isArray(data)) {
+        setProducts(data); // ✅ Good: it's an array
+      } else {
+        console.error("❌ API returned non-array data:", data);
+        setProducts([]); // 🔒 Safe fallback
+      }
+    } catch (error) {
+      console.error("❌ Error fetching products:", error);
+      setProducts([]); // 🔒 Safe fallback
     }
-    fetchProducts();
-  }, []);
+  }
+
+  fetchProducts();
+}, []);
+
 
   const handleAddToCart = async (productId: string) => {
     if (!session?.user?.id) {
