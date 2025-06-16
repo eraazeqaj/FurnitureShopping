@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
   },
 
   env: {
-  MONGODB_URL: process.env.MONGODB_URL,
+  MONGODB_URI: process.env.MONGODB_URL,
 },
 
 }
