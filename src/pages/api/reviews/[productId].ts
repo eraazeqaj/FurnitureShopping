@@ -1,27 +1,30 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { productId } = req.query;
+
   if (!productId || typeof productId !== "string") {
     return res.status(400).json({ message: "Invalid product ID" });
   }
 
   try {
     const client = await clientPromise;
-    const db = client.db("dreamlv");
+    const db = client.db("DreamLiving");
 
-    // Fetch reviews for the product, sorting by newest first
+  
+
+    // Find reviews for the product
     const reviews = await db.collection("reviews")
-      .find({ productId })
+      .find({ productId: productId })
       .sort({ createdAt: -1 })
       .toArray();
 
-    // Optionally, you can join user info if you want (like username)
-    // For now, just return review data
+    // Format reviews for client
     const reviewsClean = reviews.map(r => ({
       id: r._id.toString(),
-      userId: r.userId,
+      userId: r.userId.toString(),
       rating: r.rating,
       comment: r.comment,
       createdAt: r.createdAt,

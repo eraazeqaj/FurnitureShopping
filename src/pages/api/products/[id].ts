@@ -11,7 +11,7 @@ export default async function handler(req:NextApiRequest, res: NextApiResponse){
 
     try{
         const client = await clientPromise;
-        const db = client.db("dreamlv");
+        const db = client.db("DreamLiving");
 
         const product = await db.collection("products").findOne({_id: new ObjectId(id)});
 

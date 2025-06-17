@@ -13,7 +13,7 @@ import { ObjectId } from "mongodb";
 
 const getDb = async () => {
   const client = await clientPromise;
-  return client.db("dreamlv");
+  return client.db("DreamLiving");
 }
 
 export async function createProducts(data: Product) {

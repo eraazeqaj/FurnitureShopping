@@ -37,16 +37,16 @@ export default function ReviewsList({ productId }: ReviewsListProps) {
 
   if (loading) return <p>Loading reviews...</p>;
   if (error) return <p className="text-red-600">Error: {error}</p>;
-  if (reviews.length === 0) return <p>No reviews yet. Be the first to review!</p>;
+  if (reviews.length === 0) return <p className="text-amber-900">No reviews yet. Be the first to review!</p>;
 
   return (
     <div>
-      <h3 className="text-xl font-semibold mb-4">Reviews</h3>
+      <h3 className="text-xl text-amber-900 font-semibold mb-4">Reviews</h3>
       {reviews.map((r) => (
         <div key={r.id} className="border p-4 mb-4 rounded">
-          <p><strong>Rating:</strong> {r.rating} / 5</p>
-          <p>{r.comment}</p>
-          <p className="text-sm text-gray-500">
+          <p className="text-amber-900"><strong>Rating:</strong> {r.rating} / 5</p>
+          <p className="text-amber-900">{r.comment}</p>
+          <p className="text-sm text-amber-900">
             {new Date(r.createdAt).toLocaleDateString()}
           </p>
         </div>

@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const client = await clientPromise;
-  const db = client.db("dreamlv");
+  const db = client.db("DreamLiving");
 
   const user = await db.collection("users").findOne({ email: session.user.email });
   if (!user) return res.status(404).json({ message: "User not found" });

@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const client = await clientPromise;
-    const db = client.db("dreamlv");
+    const db = client.db("DreamLiving");
 
     const orders = await db.collection("orders").find().toArray();
 

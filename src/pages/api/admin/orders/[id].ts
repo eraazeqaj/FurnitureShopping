@@ -29,7 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const client = await clientPromise;
-    const db = client.db("dreamlv");
+    const db = client.db("DreamLiving");
 
     const result = await db.collection("orders").updateOne(
       { _id: new ObjectId(id) },

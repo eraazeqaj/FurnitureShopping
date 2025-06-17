@@ -55,9 +55,9 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-w-md">
-      <h3 className="text-lg font-semibold">Leave a Review</h3>
+      <h3 className="text-lg font-semibold text-amber-900">Leave a Review</h3>
 
-      <label>
+      <label className="text-amber-900">
         Rating: 
         <select
           value={rating}
@@ -71,14 +71,14 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
         </select>
       </label>
 
-      <label>
+      <label className="text-amber-900">
         Comment:
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           disabled={loading}
           rows={4}
-          className="w-full border rounded p-2"
+          className="w-full border rounded p-2 text-amber-600"
           required
         />
       </label>
