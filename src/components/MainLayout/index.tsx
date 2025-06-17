@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Button from "@/components/Shared/Button";
 import { useRouter } from "next/router";
+import {useSession, signOut} from "next-auth/react";
 
 interface Props {
   children?: ReactNode;
@@ -13,6 +14,7 @@ interface Props {
 
 export function MainLayout({ children, name }: Props) {
   const router = useRouter();
+  const {data: session,status} = useSession();
 
   return (
     <>
@@ -29,10 +31,10 @@ export function MainLayout({ children, name }: Props) {
           ]}
         />
 
-        {/* 👇 Add this to push everything below the fixed header */}
+
         <div className="h-16" />
 
-        {/* ✅ Cleaned up search bar + Kyçu button */}
+
         <div className="w-full flex justify-end items-center gap-4 px-8 mb-4">
           <input
             type="text"
@@ -45,9 +47,23 @@ export function MainLayout({ children, name }: Props) {
               }
             }}
           />
-          <Link href="/register">
-            <Button text="Kyçu" variant="primary" type="button" />
-          </Link>
+
+
+          {status === "loading" ? (
+  <div className="text-sm text-gray-500">Duke kontrolluar...</div>
+) : status === "authenticated" ? (
+  <Button
+    text="Shkyçu"
+    variant="primary"
+    type="button"
+    onClick={() => signOut({ callbackUrl: "/" })}
+  />
+) : (
+  <Link href="/login">
+    <Button text="Kyçu" variant="primary" type="button" />
+  </Link>
+)}
+
         </div>
 
         <main className="flex-1">{children}</main>

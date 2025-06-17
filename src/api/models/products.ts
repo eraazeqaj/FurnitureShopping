@@ -56,3 +56,11 @@ export interface CartItem{
   action: string;
   timestamp: Date;
  }
+
+ export interface ContactMessage {
+  _id?: string;
+  name: string;
+  email: string;
+  message: string;
+  createdAt?: Date;
+}
