@@ -1,20 +1,22 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, MongoClientOptions } from "mongodb";
 
 const uri = process.env.MONGODB_URI!;
+const options: MongoClientOptions = {};
 
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
-
+// Extend NodeJS.Global interface to add _mongoClientPromise property
 declare global {
   // eslint-disable-next-line no-var
   var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
-if (!global._mongoClientPromise) {
-  client = new MongoClient(uri);
-  global._mongoClientPromise = client.connect();
-}
+let client: MongoClient;
 
-clientPromise = global._mongoClientPromise;
+const clientPromise: Promise<MongoClient> = (async () => {
+  if (!global._mongoClientPromise) {
+    client = new MongoClient(uri, options);
+    global._mongoClientPromise = client.connect();
+  }
+  return global._mongoClientPromise;
+})();
 
 export default clientPromise;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -87,9 +88,9 @@ export default function LoginForm() {
 
         <p className="text-center text-sm text-amber-800">
           Nuk ke një llogari?{" "}
-          <a href="/register" className="text-amber-700 underline font-medium">
+          <Link href="/register" className="text-amber-700 underline font-medium">
             Regjistrohu këtu
-          </a>
+          </Link>
         </p>
       </form>
     </div>

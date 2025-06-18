@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import clientPromise from "@/lib/mongodb";
-import { ObjectId } from "mongodb";
+
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { productId } = req.query;

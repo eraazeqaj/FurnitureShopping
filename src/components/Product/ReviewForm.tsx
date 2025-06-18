@@ -46,9 +46,14 @@ export default function ReviewForm({ productId, onReviewSubmitted }: ReviewFormP
       setRating(5);
       setComment("");
       if (onReviewSubmitted) onReviewSubmitted();
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
+    } catch (err) {
+  if (err instanceof Error) {
+    setError(err.message);
+  } else {
+    setError("Unknown error occurred.");
+  }
+}
+ finally {
       setLoading(false);
     }
   }

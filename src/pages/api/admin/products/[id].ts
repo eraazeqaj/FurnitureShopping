@@ -1,6 +1,6 @@
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
-import { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const client = await clientPromise;
@@ -11,15 +11,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ message: "Invalid product ID" });
   }
 
+  const objectId = new ObjectId(id);
+
   switch (req.method) {
     case "GET":
       try {
-        const product = await db.collection("products").findOne({ _id: new ObjectId(id) });
+        const product = await db.collection("products").findOne({ _id: objectId });
         if (!product) {
           return res.status(404).json({ message: "Product not found" });
         }
         return res.status(200).json(product);
-      } catch (err) {
+      } catch (error) {
+        console.error("GET /api/admin/products/[id] error:", error);
         return res.status(500).json({ message: "Failed to fetch product" });
       }
 
@@ -27,12 +30,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       try {
         const { name, description, price, pictureUrl, categoryId } = req.body;
 
-        if (!name || !description || !price) {
-          return res.status(400).json({ message: "Missing fields" });
+        if (!name || !description || typeof price !== "number") {
+          return res.status(400).json({ message: "Missing or invalid fields" });
         }
 
-        const result = await db.collection("products").updateOne(
-          { _id: new ObjectId(id) },
+        const updateResult = await db.collection("products").updateOne(
+          { _id: objectId },
           {
             $set: {
               name,
@@ -44,17 +47,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           }
         );
 
-        return res.status(200).json({ message: "Updated successfully", result });
-      } catch (err) {
-        return res.status(500).json({ message: "Failed to update" });
+        return res.status(200).json({ message: "Updated successfully", result: updateResult });
+      } catch (error) {
+        console.error("PUT /api/admin/products/[id] error:", error);
+        return res.status(500).json({ message: "Failed to update product" });
       }
 
     case "DELETE":
       try {
-        await db.collection("products").deleteOne({ _id: new ObjectId(id) });
-        return res.status(200).json({ message: "Deleted successfully" });
-      } catch (err) {
-        return res.status(500).json({ message: "Failed to delete" });
+        const deleteResult = await db.collection("products").deleteOne({ _id: objectId });
+        return res.status(200).json({ message: "Deleted successfully", result: deleteResult });
+      } catch (error) {
+        console.error("DELETE /api/admin/products/[id] error:", error);
+        return res.status(500).json({ message: "Failed to delete product" });
       }
 
     default:
@@ -62,4 +67,3 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
-

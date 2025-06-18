@@ -1,7 +1,8 @@
-"use client"; 
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -32,7 +33,7 @@ export default function RegisterForm() {
           name: user.name,
           email: user.email,
           password: user.password,
-          isAdmin:user.isAdmin,
+          isAdmin: user.isAdmin,
         }),
       });
 
@@ -41,9 +42,10 @@ export default function RegisterForm() {
       if (!res.ok) {
         setError(data.error || "Gabim gjatë regjistrimit.");
       } else {
-        router.push("/Forms/LoginForm");
+        router.push("/login");
       }
-    } catch (err) {
+    } catch (error) {
+      console.error(error);
       setError("Nuk u lidh dot me serverin.");
     }
   };
@@ -59,9 +61,7 @@ export default function RegisterForm() {
         </h2>
 
         {error && (
-          <div className="bg-red-100 text-red-700 p-2 rounded text-sm">
-            {error}
-          </div>
+          <div className="bg-red-100 text-red-700 p-2 rounded text-sm">{error}</div>
         )}
 
         <div className="flex flex-col space-y-2">
@@ -107,10 +107,7 @@ export default function RegisterForm() {
         </div>
 
         <div className="flex flex-col space-y-2">
-          <label
-            className="text-amber-900 font-semibold"
-            htmlFor="confirmPassword"
-          >
+          <label className="text-amber-900 font-semibold" htmlFor="confirmPassword">
             Konfirmo fjalëkalimin
           </label>
           <input
@@ -126,20 +123,17 @@ export default function RegisterForm() {
         </div>
 
         <div className="flex items-center space-x-2">
-            <input
-              type="checkbox"
-              id="isAdmin"
-              checked={user.isAdmin}
-              onChange={(e) =>
-              setUser({ ...user, isAdmin: e.target.checked })
-              }
-              className="w-4 h-4 text-amber-600 bg-gray-100 border-gray-300 rounded focus:ring-amber-500"
-            />
-            <label htmlFor="isAdmin" className="text-amber-900 font-medium">
+          <input
+            type="checkbox"
+            id="isAdmin"
+            checked={user.isAdmin}
+            onChange={(e) => setUser({ ...user, isAdmin: e.target.checked })}
+            className="w-4 h-4 text-amber-600 bg-gray-100 border-gray-300 rounded focus:ring-amber-500"
+          />
+          <label htmlFor="isAdmin" className="text-amber-900 font-medium">
             Regjistrohu si admin
-           </label>
+          </label>
         </div>
-
 
         <button
           type="submit"
@@ -150,9 +144,9 @@ export default function RegisterForm() {
 
         <p className="text-center text-sm text-amber-800">
           Ke një llogari?{" "}
-          <a href="/login" className="text-amber-700 underline font-medium">
+          <Link href="/login" className="text-amber-700 underline font-medium">
             Kyçu këtu
-          </a>
+          </Link>
         </p>
       </form>
     </div>

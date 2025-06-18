@@ -33,7 +33,7 @@ export default function Contact() {
       >
         <h1 className="text-5xl font-bold mb-6">Na Kontaktoni</h1>
         <p className="text-xl mb-10 max-w-2xl mx-auto">
-          Keni pyetje ose dëshironi të dini më shumë? Na dërgoni mesazh dhe do t'ju përgjigjemi sa më shpejt të jetë e mundur.
+        Keni pyetje ose dëshironi të dini më shumë? Na dërgoni mesazh dhe do tju përgjigjemi sa më shpejt të &apos;jetë e mundur.
         </p>
 
         <form onSubmit={handleSubmit} className="max-w-md mx-auto text-left">

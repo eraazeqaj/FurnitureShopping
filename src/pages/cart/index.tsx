@@ -23,6 +23,7 @@ export default function CartPage() {
     async function fetchCart() {
       try {
         const res = await fetch("/api/cart");
+        if (!res.ok) throw new Error("Failed to fetch cart");
         const data = await res.json();
         setCartItems(data);
       } catch (err) {
@@ -36,7 +37,7 @@ export default function CartPage() {
   }, [session?.user?.id]);
 
   const totalPrice = cartItems.reduce(
-    (sum, item) => sum + (item.product?.price || 0) * item.quantity,
+    (sum, item) => sum + (item.product?.price ?? 0) * item.quantity,
     0
   );
 
@@ -85,7 +86,7 @@ export default function CartPage() {
         <div className="space-y-6">
           {cartItems.map((item) => (
             <div
-              key={item._id}
+              key={item._id ?? item.productId}
               className="flex items-center justify-between bg-amber-100 p-4 rounded-lg shadow"
             >
               <div className="flex items-center gap-4">
@@ -98,16 +99,16 @@ export default function CartPage() {
                 )}
                 <div>
                   <h2 className="text-lg font-semibold text-amber-900">
-                    {item.product?.name}
+                    {item.product?.name || "Produkt i panjohur"}
                   </h2>
                   <p className="text-sm text-gray-700">Sasia: {item.quantity}</p>
                   <p className="text-sm text-amber-800">
-                    Çmimi: €{item.product?.price}
+                    Çmimi: €{item.product?.price?.toFixed(2) ?? "0.00"}
                   </p>
                 </div>
               </div>
               <p className="text-xl font-bold text-amber-700">
-                €{item.product?.price! * item.quantity}
+                €{((item.product?.price ?? 0) * item.quantity).toFixed(2)}
               </p>
             </div>
           ))}

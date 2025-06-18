@@ -1,57 +1,30 @@
 import { useEffect, useState } from "react";
 import { Product } from "@/api/models/products";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 
 export default function CataloguePage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const { data: session } = useSession();
 
   useEffect(() => {
-  async function fetchProducts() {
-    try {
-      const res = await fetch("/api/products");
-      const data = await res.json();
+    async function fetchProducts() {
+      try {
+        const res = await fetch("/api/products");
+        const data = await res.json();
 
-      if (Array.isArray(data)) {
-        setProducts(data); // ✅ Good: it's an array
-      } else {
-        console.error("❌ API returned non-array data:", data);
-        setProducts([]); // 🔒 Safe fallback
+        if (Array.isArray(data)) {
+          setProducts(data);
+        } else {
+          console.error("❌ API returned non-array data:", data);
+          setProducts([]);
+        }
+      } catch (error) {
+        console.error("❌ Error fetching products:", error);
+        setProducts([]);
       }
-    } catch (error) {
-      console.error("❌ Error fetching products:", error);
-      setProducts([]); // 🔒 Safe fallback
-    }
-  }
-
-  fetchProducts();
-}, []);
-
-
-  const handleAddToCart = async (productId: string) => {
-    if (!session?.user?.id) {
-      alert("Duhet të jeni i kyçur për të shtuar në shportë.");
-      return;
     }
 
-    try {
-      const res = await fetch("/api/cart/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId, quantity: 1 }),
-      });
-
-      const data = await res.json();
-      if (res.ok) {
-        alert("Produkti u shtua në shportë.");
-      } else {
-        alert(data.message || "Gabim gjatë shtimit në shportë.");
-      }
-    } catch (err) {
-      alert("Gabim gjatë komunikimit me serverin.");
-    }
-  };
+    fetchProducts();
+  }, []);
 
   return (
     <div className="p-6 bg-amber-50 min-h-screen">
@@ -75,7 +48,6 @@ export default function CataloguePage() {
               <p className="text-amber-800 mt-1">{product.description}</p>
               <p className="text-amber-700 font-bold mt-2">{product.price} €</p>
             </Link>
-
           </div>
         ))}
       </div>

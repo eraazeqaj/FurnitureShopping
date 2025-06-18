@@ -14,7 +14,7 @@ interface Props {
 
 export function MainLayout({ children, name }: Props) {
   const router = useRouter();
-  const {data: session,status} = useSession();
+  const {status} = useSession();
 
   return (
     <>

@@ -25,8 +25,12 @@ export default function ReviewsList({ productId }: ReviewsListProps) {
         if (!res.ok) throw new Error("Failed to fetch reviews");
         const data = await res.json();
         setReviews(data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("Unknown error occurred.");
+        }
       } finally {
         setLoading(false);
       }

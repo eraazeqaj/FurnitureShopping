@@ -1,8 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 interface Props {
-  icon?: any;
+  icon?: React.ComponentType<{ className?: string }>;
   imageUrl?: string;
   title: string;
   description: string;
@@ -16,7 +17,15 @@ const Card: React.FC<Props> = ({ icon: Icon, imageUrl, title, description, price
       whileHover={{ scale: 1.05 }}
     >
       {imageUrl ? (
-        <img src={imageUrl} alt={title} className="w-full h-48 object-cover" />
+        <div className="relative w-full h-48">
+          <Image
+            src={imageUrl}
+            alt={title}
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
       ) : Icon ? (
         <div className="flex items-center justify-center h-48">
           <Icon className="text-yellow-600 w-12 h-12" />

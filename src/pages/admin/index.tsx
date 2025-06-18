@@ -79,12 +79,12 @@ export default function AdminDashboardPage() {
     }
   }
 
-  async function handleDeleteProduct(id: string | undefined) {
+  async function handleDeleteProduct(id?: string) {
     if (!id) return;
     if (confirm("A jeni të sigurtë që doni ta fshini këtë produkt?")) {
       const res = await fetch(`/api/admin/products/${id}`, { method: "DELETE" });
       if (res.ok) {
-        setProducts(products.filter((p) => p._id !== id));
+        setProducts((prev) => prev.filter((p) => p._id !== id));
       } else {
         alert("Error deleting product");
       }
@@ -105,14 +105,13 @@ export default function AdminDashboardPage() {
         return;
       }
 
-      if (newStatus === "completed" || newStatus === "cancelled") {
-        setOrders((prev) => prev.filter((o) => o._id !== id));
-      } else {
-        setOrders((prev) =>
-          prev.map((o) => (o._id === id ? { ...o, status: newStatus } : o))
-        );
-      }
-    } catch (error) {
+      setOrders((prev) =>
+        newStatus === "completed" || newStatus === "cancelled"
+          ? prev.filter((o) => o._id !== id)
+          : prev.map((o) => (o._id === id ? { ...o, status: newStatus } : o))
+      );
+    } 
+    catch {
       alert("Something went wrong while updating order status.");
     }
   }
@@ -123,7 +122,7 @@ export default function AdminDashboardPage() {
       <section>
         <h1 className="text-3xl font-bold text-amber-900 mb-6">Menaxho Produktet</h1>
         <Link href="/admin/products/new">
-          <Button text="Shto produkt të ri" onClick={() => {}} variant="primary" />
+          <Button text="Shto produkt të ri" variant="primary" />
         </Link>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
           {products.map((product) => (
@@ -136,7 +135,7 @@ export default function AdminDashboardPage() {
               <p className="text-amber-800 font-bold mt-2">€{product.price}</p>
               <div className="mt-4 flex justify-between">
                 <Link href={`/admin/products/${product._id}/edit`}>
-                  <Button text="Përditëso" onClick={() => {}} variant="tertiary" />
+                  <Button text="Përditëso" variant="tertiary" />
                 </Link>
                 <Button
                   text="Fshi"
@@ -162,7 +161,7 @@ export default function AdminDashboardPage() {
           >
             <p className="text-amber-800"><strong>ID:</strong> {order._id}</p>
             <p className="text-amber-800"><strong>Status:</strong> {order.status}</p>
-            <p className="text-amber-800"><strong>Totali:</strong> €{(order.totalAmount ?? 0).toFixed(2)}</p>
+            <p className="text-amber-800"><strong>Totali:</strong> €{order.totalAmount.toFixed(2)}</p>
             <p className="text-amber-800"><strong>Data:</strong> {new Date(order.createdAt).toLocaleString()}</p>
             <div className="mt-4 flex gap-3">
               <button

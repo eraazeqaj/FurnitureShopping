@@ -5,10 +5,7 @@ import Head from "next/head";
 import { SessionProvider } from "next-auth/react";
 
 export default function App({ Component, pageProps }: AppProps) {
-  let title = pageProps.title ?? "My Platform";
-  let description = pageProps.description ?? "My Platform Description";
-  let image = pageProps.image ?? "https://my-domain/meta.svg";
-  let url = pageProps.url ?? "https://my-domain.com";
+  const title = pageProps.title ?? "My Platform";
 
   return (
     <>
@@ -21,14 +18,12 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
         {/* Other SEO meta tags */}
       </Head>
-      <SessionProvider session = {pageProps.session}> 
-
-      {/* Wrap all pages inside MainLayout */}
-      <MainLayout name={title}>
-        <Component {...pageProps} />
-      </MainLayout>
+      <SessionProvider session={pageProps.session}>
+        {/* Wrap all pages inside MainLayout */}
+        <MainLayout name={title}>
+          <Component {...pageProps} />
+        </MainLayout>
       </SessionProvider>
     </>
   );
 }
-

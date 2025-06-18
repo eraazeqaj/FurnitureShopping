@@ -1,17 +1,9 @@
-import NextAuth, { NextAuthOptions, Session, User as NextAuthUser } from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import clientPromise from "@/lib/mongodb";
 import { compare } from "bcryptjs";
-import { MongoClient } from "mongodb";
-import { ObjectId } from "mongodb";
-
-interface User {
-  _id: ObjectId;
-  email: string;
-  name?: string;
-  password: string;
-  isAdmin?: boolean;
-}
+import { JWT } from "next-auth/jwt";
+import { Session } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -22,53 +14,53 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-  console.log("Trying login for email:", credentials?.email);
-  if (!credentials?.email || !credentials?.password) {
-    throw new Error("Email and password required");
-  }
+        console.log("Trying login for email:", credentials?.email);
 
-  const client = await clientPromise;
-  const db = client.db("DreamLiving");
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Email and password required");
+        }
 
-  const user = await db.collection("users").findOne({ email: credentials.email });
-  console.log("User found:", user);
+        const client = await clientPromise;
+        const db = client.db("DreamLiving");
 
-  if (!user) {
-    throw new Error("No user found with this email");
-  }
+        const user = await db.collection("users").findOne({ email: credentials.email });
 
-  const isValid = await compare(credentials.password, user.password);
-  if (!isValid) {
-    throw new Error("Invalid password");
-  }
+        console.log("User found:", user);
 
-  return {
-    id: user._id.toString(),
-    email: user.email,
-    name: user.name || null,
-    isAdmin: user.isAdmin || false,
-  };
-}
-,
+        if (!user) {
+          throw new Error("No user found with this email");
+        }
+
+        const isValid = await compare(credentials.password, user.password);
+        if (!isValid) {
+          throw new Error("Invalid password");
+        }
+
+        return {
+          id: user._id.toString(),
+          email: user.email,
+          name: user.name || null,
+          isAdmin: user.isAdmin || false,
+        };
+      },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
   session: {
-    strategy: "jwt", // correct typing: "jwt" | "database"
+    strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }: { token: JWT; user?: { id: string; isAdmin?: boolean } }) {
       if (user) {
-        token.id = (user as any).id;
-        token.isAdmin = (user as any).isAdmin;
+        token.id = user.id;
+        token.isAdmin = user.isAdmin ?? false;
       }
       return token;
     },
-    async session({ session, token }) {
-      if (token) {
-        session.user = session.user || {};
-        (session.user as any).id = token.id;
-        (session.user as any).isAdmin = token.isAdmin;
+    async session({ session, token }: { session: Session; token: JWT }) {
+      if (token && session.user) {
+        session.user.id = token.id as string;
+        (session.user ).isAdmin = token.isAdmin; 
       }
       return session;
     },
